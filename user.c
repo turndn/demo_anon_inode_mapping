@@ -86,6 +86,7 @@ int main(void)
 	long mmap_size;
 	struct child_struct *c = NULL;
 
+	printf("[+] Open /dev/up\n");
 	fd = open("/dev/up", O_RDWR|O_NONBLOCK);
 
 	if (fd < 0) {
@@ -93,20 +94,25 @@ int main(void)
 		return 1;
 	}
 
+	printf("[+] Create struct_child at LKM\n");
 	r = cmd_create_ioctl(fd);
 	if (r < 0)
 		return 2;
 
+	printf("[+] Get mmap_size\n");
 	mmap_size = cmd_mmap_ioctl(fd);
 	if (mmap_size < 0)
 		return 3;
 
+	printf("[+] Create anonymous inode\n");
+	printf("[+] Map child_struct\n");
 	r = cmd_open_ioctl(fd, mmap_size, &c);
 	if (r < 0)
 		return 4;
 
 	print_child(c);
 
+	printf("[+] Change child_struct->value\n");
 	r = cmd_val_ioctl(fd, 5);
 	if (r < 0) {
 		return 5;
