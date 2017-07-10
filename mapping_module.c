@@ -17,6 +17,7 @@ MODULE_LICENSE("GPL");
 #define CMD_OPEN 	_IO(UPIO,	0x01)
 #define CMD_VAL  	_IOW(UPIO,	0x02, int)
 #define CMD_MMAPSIZE	_IO(UPIO,	0x03)
+#define CMD_BUG 	_IO(UPIO,	0x04)
 
 struct child_struct {
 	__u32 id;
@@ -84,6 +85,7 @@ static long parent_dev_ioctl(struct file *filp,
 {
 	long r = -EINVAL;
 	struct page *page;
+	struct parent_struct *null_ptr = NULL;
 
 	switch (ioctl) {
 	case CMD_CREATE:
@@ -113,6 +115,9 @@ static long parent_dev_ioctl(struct file *filp,
 		break;
 	case CMD_MMAPSIZE:
 		r = PAGE_SIZE;
+		break;
+	case CMD_BUG:
+		null_ptr->child->id = 0;
 		break;
 	default:
 		break;

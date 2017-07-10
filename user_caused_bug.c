@@ -12,6 +12,7 @@
 #define CMD_OPEN 	_IO(UPIO,	0x01)
 #define CMD_VAL  	_IOW(UPIO,	0x02, int)
 #define CMD_MMAPSIZE	_IO(UPIO,	0x03)
+#define CMD_BUG 	_IO(UPIO,	0x04)
 
 struct child_struct {
 	uint32_t id;
@@ -111,16 +112,8 @@ int main(void)
 		return 4;
 
 	print_child(c);
-
-	for (int32_t i = 0; i < 32; i++) {
-		printf("[+] Change child_struct->value\n");
-		r = cmd_val_ioctl(fd, i);
-		if (r < 0) {
-			return 5;
-		}
-		sleep(1);
-		print_child(c);
-	}
+	
+	r = ioctl(fd, CMD_BUG);
 
 	return 0;
 }
