@@ -1,5 +1,5 @@
 # Demo, anonymous inode mapping to userspace
-This driver creates anonymous inode which is accessed from userspace.
+This LKM creates anonymous inode which is accessed from userspace.
 A structure is mapped to an allocated page.
 
 # Usage
