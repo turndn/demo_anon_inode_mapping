@@ -36,13 +36,10 @@ struct parent_struct parent = {
 	.child = NULL,
 };
 
-static int child_fault(struct vm_area_struct *vma, struct vm_fault *vmf)
+static int child_fault(struct vm_fault *vmf)
 {
-	struct parent_struct *p = vma->vm_file->private_data;
+	struct parent_struct *p = vmf->vma->vm_file->private_data;
 	struct page *page;
-
-	if (p->child == NULL)
-		return -1;
 
 	if (vmf->pgoff == 0)
 		page = virt_to_page(p->child);
