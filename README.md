@@ -1,5 +1,6 @@
 # Demo, anonymous inode mapping to userspace
-Anonymous inode を作って構造体をマップして userspace からアクセスするやつ．
+This driver creates anonymous inode which is accessed from userspace.
+A structure is mapped to an allocated page.
 
 # Usage
 
